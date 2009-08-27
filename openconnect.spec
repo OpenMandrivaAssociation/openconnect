@@ -2,7 +2,7 @@ Name:		openconnect
 Version:	2.01
 Release:	%mkrel 1
 Summary:	Open client for Cisco AnyConnect VPN
-Group:		Applications/Internet
+Group:		Networking/Other
 License:	LGPLv2+
 URL:		http://www.infradead.org/openconnect.html
 Source:     ftp://ftp.infradead.org/pub/openconnect/openconnect-%{version}.tar.gz
