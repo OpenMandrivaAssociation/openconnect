@@ -1,6 +1,6 @@
 Name:		openconnect
 Version:	2.01
-Release:	%mkrel 1
+Release:	%mkrel 2
 Summary:	Open client for Cisco AnyConnect VPN
 Group:		Networking/Other
 License:	LGPLv2+
@@ -10,7 +10,6 @@ Patch:      openconnect-2.01-fix-format-errors.patch
 BuildRequires:	openssl-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	dbus-devel
-Requires:	openssl >= 0.9.8k-4
 BuildRoot:	%{_tmppath}/%{name}-%{version}
 
 %description
