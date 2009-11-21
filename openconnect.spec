@@ -1,6 +1,6 @@
 Name:		openconnect
-Version:	2.01
-Release:	%mkrel 2
+Version:	2.11
+Release:	%mkrel 1
 Summary:	Open client for Cisco AnyConnect VPN
 Group:		Networking/Other
 License:	LGPLv2+
