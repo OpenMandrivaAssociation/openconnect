@@ -1,5 +1,5 @@
 Name:		openconnect
-Version:	2.20
+Version:	2.21
 Release:	%mkrel 1
 Summary:	Open client for Cisco AnyConnect VPN
 Group:		Networking/Other
