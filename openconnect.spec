@@ -1,6 +1,6 @@
 Name:		openconnect
 Version:	2.26
-Release:	%mkrel 2
+Release:	%mkrel 3
 Summary:	Open client for Cisco AnyConnect VPN
 Group:		Networking/Other
 License:	LGPLv2+
@@ -9,6 +9,8 @@ Source:     ftp://ftp.infradead.org/pub/openconnect/openconnect-%{version}.tar.g
 Patch:      openconnect-2.01-fix-format-errors.patch
 BuildRequires:	openssl-devel
 BuildRequires:	libxml2-devel
+BuildRequires:	gtk2-devel
+BuildRequires:	libGConf2-devel
 BuildRequires:	dbus-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}
 
@@ -29,6 +31,11 @@ rm -rf %{buildroot}
 mkdir -p %{buildroot}%{_mandir}/man8
 install -m 644 openconnect.8 %{buildroot}%{_mandir}/man8
 
+# libexecdir is actually libdir on mandriva
+install -d -m 755 %{buildroot}%{_libexecdir}
+mv %{buildroot}%{_prefix}/libexec/nm-openconnect-auth-dialog \
+    %{buildroot}%{_libexecdir}
+
 %clean
 rm -rf %{buildroot}
 
@@ -37,4 +44,4 @@ rm -rf %{buildroot}
 %doc TODO COPYING.LGPL openconnect.html
 %{_bindir}/openconnect
 %{_mandir}/man8/*
-
+%{_libexecdir}/nm-openconnect-auth-dialog
