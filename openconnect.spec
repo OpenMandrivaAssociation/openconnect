@@ -1,6 +1,6 @@
 Name:		openconnect
 Version:	2.26
-Release:	%mkrel 3
+Release:	%mkrel 4
 Summary:	Open client for Cisco AnyConnect VPN
 Group:		Networking/Other
 License:	LGPLv2+
@@ -17,6 +17,15 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}
 %description
 This package provides a client for Cisco's "AnyConnect" VPN, which uses
 HTTPS and DTLS protocols.
+
+%package networkmanager
+Summary:	Auth dialog for networkmanager openconnect plugin
+Requires:   %{name} = %{version}-%{release}
+Group:		Networking/Other
+
+%description networkmanager
+This package contains the authentication dialog for networkmanager openconnect
+plugin.
 
 %prep
 %setup -q
@@ -44,4 +53,7 @@ rm -rf %{buildroot}
 %doc TODO COPYING.LGPL openconnect.html
 %{_bindir}/openconnect
 %{_mandir}/man8/*
+
+%files networkmanager
+%defattr(-,root,root)
 %{_libexecdir}/nm-openconnect-auth-dialog
