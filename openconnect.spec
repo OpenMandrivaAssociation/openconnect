@@ -17,8 +17,9 @@ HTTPS and DTLS protocols.
 
 %package static-devel
 Summary:	Helper library that implements OpenConnect client authentication
-%description
-%summary
+
+%description static-devel
+Helper library that implements OpenConnect client authentication
 
 %prep
 %setup -q
