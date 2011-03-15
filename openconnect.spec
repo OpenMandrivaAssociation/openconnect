@@ -1,6 +1,6 @@
 Name:		openconnect
 Version:	3.01
-Release:	%mkrel 1
+Release:	%mkrel 2
 Summary:	Open client for Cisco AnyConnect VPN
 Group:		Networking/Other
 License:	LGPLv2+
@@ -15,15 +15,22 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}
 This package provides a client for Cisco's "AnyConnect" VPN, which uses
 HTTPS and DTLS protocols.
 
+%package static-devel
+Summary:	Helper library that implements OpenConnect client authentication
+%description
+%summary
+
 %prep
 %setup -q
 
 %build
+# (bor) quick hack so we do not need to patch
+sed -i -e 's|/usr/lib|%{_libdir}|g' Makefile
 %make
 
 %install
 rm -rf %{buildroot}
-%makeinstall_std
+%makeinstall_std install-lib
 mkdir -p %{buildroot}%{_mandir}/man8
 install -m 644 openconnect.8 %{buildroot}%{_mandir}/man8
 
@@ -35,3 +42,9 @@ rm -rf %{buildroot}
 %doc TODO COPYING.LGPL openconnect.html
 %{_bindir}/openconnect
 %{_mandir}/man8/*
+
+%files static-devel
+/usr/include/openconnect.h
+%{_libdir}/libopenconnect.a
+%{_libdir}/pkgconfig/openconnect.pc
+
