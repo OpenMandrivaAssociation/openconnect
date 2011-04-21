@@ -1,12 +1,11 @@
 Name:		openconnect
-Version:	3.01
-Release:	%mkrel 3
+Version:	3.02
+Release:	%mkrel 1
 Summary:	Open client for Cisco AnyConnect VPN
 Group:		Networking/Other
 License:	LGPLv2+
 URL:		http://www.infradead.org/openconnect.html
 Source:     ftp://ftp.infradead.org/pub/openconnect/openconnect-%{version}.tar.gz
-Patch:      openconnect-3.01-fix-man-page.patch
 BuildRequires:	openssl-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	dbus-devel
@@ -24,7 +23,6 @@ Helper library that implements OpenConnect client authentication
 
 %prep
 %setup -q
-%patch -p1
 
 %build
 # (bor) quick hack so we do not need to patch
