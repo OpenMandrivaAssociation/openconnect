@@ -1,5 +1,9 @@
+%define	major 1
+%define libname %mklibname %{name} %{major}
+%define develname %mklibname %{name} -d
+
 Name:		openconnect
-Version:	3.02
+Version:	3.10
 Release:	%mkrel 1
 Summary:	Open client for Cisco AnyConnect VPN
 Group:		Networking/Other
@@ -15,25 +19,36 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}
 This package provides a client for Cisco's "AnyConnect" VPN, which uses
 HTTPS and DTLS protocols.
 
-%package static-devel
-Summary:	Helper library that implements OpenConnect client authentication
+%package -n %{libname}
+Summary:	Dynamic libraries for %{name}
 
-%description static-devel
-Helper library that implements OpenConnect client authentication
+%description -n %{libname}
+This package contains libraries for %{name}.
+
+%package -n %{develname}
+Summary:	Development files for %{name}
+Group:		Development/C
+Requires:	%{libname} = %{version}-%{release}
+Provides:	%{name}-devel = %{version}-%{release}
+Provides:	lib%{name}-devel = %{version}-%{release}
+
+%description -n	%{develname}
+This package contains development files for %{name}.
 
 %prep
 %setup -q
 
 %build
+%configure2_5x
 # (bor) quick hack so we do not need to patch
-sed -i -e 's|/usr/lib|%{_libdir}|g' Makefile
+#sed -i -e 's|/usr/lib|%{_libdir}|g' Makefile
 %make
 
 %install
 rm -rf %{buildroot}
-%makeinstall_std install-lib
-mkdir -p %{buildroot}%{_mandir}/man8
-install -m 644 openconnect.8 %{buildroot}%{_mandir}/man8
+%makeinstall_std
+#mkdir -p %{buildroot}%{_mandir}/man8
+#install -m 644 openconnect.8 %{buildroot}%{_mandir}/man8
 
 %clean
 rm -rf %{buildroot}
@@ -44,8 +59,14 @@ rm -rf %{buildroot}
 %{_bindir}/openconnect
 %{_mandir}/man8/*
 
-%files static-devel
-/usr/include/openconnect.h
-%{_libdir}/libopenconnect.a
+%files -n %{libname}
+%defattr(-,root,root)
+%{_libdir}/libopenconnect.so.%{major}*
+
+%files -n %{develname}
+%defattr(-,root,root)
+%{_includedir}/openconnect.h
+%{_libdir}/libopenconnect.la
+%{_libdir}/libopenconnect.so
 %{_libdir}/pkgconfig/openconnect.pc
 
