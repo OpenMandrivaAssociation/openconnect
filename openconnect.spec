@@ -39,7 +39,7 @@ This package contains development files for %{name}.
 %setup -q
 
 %build
-%configure2_5x
+%configure2_5x --disable-static
 # (bor) quick hack so we do not need to patch
 #sed -i -e 's|/usr/lib|%{_libdir}|g' Makefile
 %make
@@ -50,13 +50,16 @@ rm -rf %{buildroot}
 #mkdir -p %{buildroot}%{_mandir}/man8
 #install -m 644 openconnect.8 %{buildroot}%{_mandir}/man8
 
+%find_lang %{name}
+
 %clean
 rm -rf %{buildroot}
 
-%files
+%files -f %{name}.lang
 %defattr(-,root,root)
 %doc TODO COPYING.LGPL openconnect.html
-%{_bindir}/openconnect
+%{_sbindir}/%{name}
+%{_datadir}/%{name}
 %{_mandir}/man8/*
 
 %files -n %{libname}
@@ -68,5 +71,5 @@ rm -rf %{buildroot}
 %{_includedir}/openconnect.h
 %{_libdir}/libopenconnect.la
 %{_libdir}/libopenconnect.so
-%{_libdir}/pkgconfig/openconnect.pc
+%{_libdir}/pkgconfig/%{name}.pc
 
