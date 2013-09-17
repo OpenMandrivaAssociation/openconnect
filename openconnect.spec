@@ -12,6 +12,8 @@ Url:		http://www.infradead.org/openconnect.html
 Source0:	ftp://ftp.infradead.org/pub/openconnect/openconnect-%{version}.tar.gz
 BuildRequires:	pkgconfig(dbus-1)
 BuildRequires:	pkgconfig(libxml-2.0)
+BuildRequires:	pkgconfig(gnutls)
+# our version 1.0.0e of OpenSSL is known to be broken with Cisco DTLS.
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	vpnc
 
