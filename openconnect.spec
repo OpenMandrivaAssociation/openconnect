@@ -1,19 +1,19 @@
-%define	major 1
+%define	major 2
 %define libname %mklibname %{name} %{major}
 %define devname %mklibname %{name} -d
 
 Name:		openconnect
-Version:	3.15
-Release:	2
+Version:	5.01
+Release:	1
 Summary:	Open client for Cisco AnyConnect VPN
 Group:		Networking/Other
 License:	LGPLv2+
 Url:		http://www.infradead.org/openconnect.html
 Source0:	ftp://ftp.infradead.org/pub/openconnect/openconnect-%{version}.tar.gz
-Patch0:		%{name}-CVE-2012-3291.patch
 BuildRequires:	pkgconfig(dbus-1)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(openssl)
+BuildRequires:	vpnc
 
 %description
 This package provides a client for Cisco's "AnyConnect" VPN, which uses
@@ -36,10 +36,9 @@ This package contains the development files for %{name}.
 
 %prep
 %setup -q
-%patch0 -p0
 
 %build
-%configure2_5x --disable-static
+%configure2_5x --disable-static --with-vpnc-script=/etc/vpnc/vpnc-script
 
 %make
 
@@ -49,9 +48,8 @@ This package contains the development files for %{name}.
 %find_lang %{name}
 
 %files -f %{name}.lang
-%doc TODO COPYING.LGPL openconnect.html
+%doc TODO COPYING.LGPL
 %{_sbindir}/%{name}
-%{_datadir}/%{name}
 %{_mandir}/man8/*
 
 %files -n %{libname}
@@ -61,4 +59,3 @@ This package contains the development files for %{name}.
 %{_includedir}/openconnect.h
 %{_libdir}/libopenconnect.so
 %{_libdir}/pkgconfig/%{name}.pc
-
