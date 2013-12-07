@@ -4,7 +4,7 @@
 
 Name:		openconnect
 Version:	5.01
-Release:	1
+Release:	2
 Summary:	Open client for Cisco AnyConnect VPN
 Group:		Networking/Other
 License:	LGPLv2+
