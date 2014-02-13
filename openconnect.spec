@@ -3,13 +3,13 @@
 %define devname %mklibname %{name} -d
 
 Name:		openconnect
-Version:	5.02
+Version:	5.03
 Release:	1
 Summary:	Open client for Cisco AnyConnect VPN
 Group:		Networking/Other
 License:	LGPLv2+
 Url:		http://www.infradead.org/openconnect.html
-Source0:	ftp://ftp.infradead.org/pub/openconnect/openconnect-%{version}.tar.gz
+Source0:	ftp://ftp.infradead.org:21/pub/openconnect/%{name}-%{version}.tar.gz
 BuildRequires:	pkgconfig(dbus-1)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(gnutls)
@@ -61,3 +61,4 @@ This package contains the development files for %{name}.
 %{_includedir}/openconnect.h
 %{_libdir}/libopenconnect.so
 %{_libdir}/pkgconfig/%{name}.pc
+
