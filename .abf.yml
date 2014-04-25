@@ -2,5 +2,6 @@ removed_sources:
   openconnect-3.15.tar.gz: 2649f2b498a06acf677f0562cc121b32135f5dbd
   openconnect-5.01.tar.gz: e0016f56749528b021c74432353c71ffaaf55faa
   openconnect-5.02.tar.gz: 79f9cce830c22f3662332132b3443e470a52a9af
-sources:
   openconnect-5.03.tar.gz: 40344fc910a19c8781a79204808f1229acaee2a4
+sources:
+  openconnect-5.99.tar.gz: 3ac20e50f2700ff58d1635f210fc263d29cf7768

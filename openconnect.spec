@@ -3,9 +3,10 @@
 %define devname %mklibname %{name} -d
 
 Name:		openconnect
-Version:	5.03
+Version:	5.99
 Release:	1
 Summary:	Open client for Cisco AnyConnect VPN
+
 Group:		Networking/Other
 License:	LGPLv2+
 Url:		http://www.infradead.org/openconnect.html
@@ -24,11 +25,13 @@ HTTPS and DTLS protocols.
 %package -n %{libname}
 Summary:	Dynamic libraries for %{name}
 
+
 %description -n %{libname}
 This package contains the shared library for %{name}.
 
 %package -n %{devname}
 Summary:	Development files for %{name}
+
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
@@ -61,4 +64,5 @@ This package contains the development files for %{name}.
 %{_includedir}/openconnect.h
 %{_libdir}/libopenconnect.so
 %{_libdir}/pkgconfig/%{name}.pc
+
 
