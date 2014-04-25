@@ -56,6 +56,8 @@ This package contains the development files for %{name}.
 %doc TODO COPYING.LGPL
 %{_sbindir}/%{name}
 %{_mandir}/man8/*
+%{_libdir}/libopenconnect.so.3
+%{_libdir}/libopenconnect.so.3.2.0
 
 %files -n %{libname}
 %{_libdir}/libopenconnect.so.%{major}*
