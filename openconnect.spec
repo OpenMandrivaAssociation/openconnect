@@ -3,8 +3,8 @@
 %define devname %mklibname %{name} -d
 
 Name:		openconnect
-Version:	5.99
-Release:	3
+Version:	6.00
+Release:	1
 Summary:	Open client for Cisco AnyConnect VPN
 
 Group:		Networking/Other
@@ -64,5 +64,3 @@ This package contains the development files for %{name}.
 %{_includedir}/openconnect.h
 %{_libdir}/libopenconnect.so
 %{_libdir}/pkgconfig/%{name}.pc
-
-
