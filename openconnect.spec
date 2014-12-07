@@ -4,7 +4,7 @@
 
 Name:		openconnect
 Version:	6.00
-Release:	1
+Release:	2
 Summary:	Open client for Cisco AnyConnect VPN
 
 Group:		Networking/Other
