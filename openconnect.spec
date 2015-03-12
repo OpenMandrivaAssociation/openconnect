@@ -1,10 +1,10 @@
-%define	major 3
+%define	major 5
 %define libname %mklibname %{name} %{major}
 %define devname %mklibname %{name} -d
 
 Name:		openconnect
-Version:	6.00
-Release:	2
+Version:	7.04
+Release:	1
 Summary:	Open client for Cisco AnyConnect VPN
 
 Group:		Networking/Other
@@ -43,7 +43,7 @@ This package contains the development files for %{name}.
 %setup -q
 
 %build
-%configure2_5x --disable-static --with-vpnc-script=/etc/vpnc/vpnc-script
+%configure --disable-static --with-vpnc-script=/etc/vpnc/vpnc-script
 
 %make
 
