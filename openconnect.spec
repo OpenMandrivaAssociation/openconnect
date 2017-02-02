@@ -17,6 +17,7 @@ BuildRequires:	pkgconfig(gnutls)
 # our version 1.0.0e of OpenSSL is known to be broken with Cisco DTLS.
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(libproxy-1.0)
+BuildRequires:	pkgconfig(krb5)
 BuildRequires:	vpnc
 
 %description
