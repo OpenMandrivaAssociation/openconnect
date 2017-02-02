@@ -4,7 +4,8 @@
 
 Name:		openconnect
 Version:	7.08
-Release:	1
+Release:	2
+=======
 Summary:	Open client for Cisco AnyConnect VPN
 
 Group:		Networking/Other
@@ -16,6 +17,8 @@ BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(gnutls)
 # our version 1.0.0e of OpenSSL is known to be broken with Cisco DTLS.
 BuildRequires:	pkgconfig(openssl)
+BuildRequires:	pkgconfig(libproxy-1.0)
+BuildRequires:	pkgconfig(krb5)
 BuildRequires:	vpnc
 
 %description
