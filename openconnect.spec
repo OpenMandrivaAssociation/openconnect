@@ -3,8 +3,8 @@
 %define devname %mklibname %{name} -d
 
 Name:		openconnect
-Version:	7.04
-Release:	5
+Version:	7.08
+Release:	1
 Summary:	Open client for Cisco AnyConnect VPN
 
 Group:		Networking/Other
