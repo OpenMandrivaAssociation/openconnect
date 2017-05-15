@@ -45,12 +45,16 @@ This package contains the development files for %{name}.
 %setup -q
 
 %build
-%configure --disable-static --with-vpnc-script=/etc/vpnc/vpnc-script
+%configure --disable-static --with-vpnc-script=/etc/vpnc/vpnc-script \
+	--with-openssl --without-openssl-version-check --with-default-gnutls-priority="@SYSTEM" \
 
 %make
 
 %install
 %makeinstall_std
+
+%check
+%make check
 
 %find_lang %{name}
 
