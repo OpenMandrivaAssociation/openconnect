@@ -1,10 +1,10 @@
-%define	major 5
+%define major 5
 %define libname %mklibname %{name} %{major}
 %define devname %mklibname %{name} -d
 
 Name:		openconnect
 Version:	7.08
-Release:	2
+Release:	3
 Summary:	Open client for Cisco AnyConnect VPN
 
 Group:		Networking/Other
@@ -18,6 +18,7 @@ BuildRequires:	pkgconfig(gnutls)
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(libproxy-1.0)
 BuildRequires:	pkgconfig(krb5)
+BuildRequires:	pkgconfig(zlib)
 BuildRequires:	vpnc
 
 %description
@@ -26,7 +27,6 @@ HTTPS and DTLS protocols.
 
 %package -n %{libname}
 Summary:	Dynamic libraries for %{name}
-
 
 %description -n %{libname}
 This package contains the shared library for %{name}.
