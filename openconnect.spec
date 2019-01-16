@@ -3,14 +3,14 @@
 %define devname %mklibname %{name} -d
 
 Name:		openconnect
-Version:	7.08
-Release:	5
+Version:	8.01
+Release:	1
 Summary:	Open client for Cisco AnyConnect VPN
 
 Group:		Networking/Other
 License:	LGPLv2+
 Url:		http://www.infradead.org/openconnect.html
-Source0:	ftp://ftp.infradead.org:21/pub/openconnect/%{name}-%{version}.tar.gz
+Source0:	ftp://ftp.infradead.org/pub/openconnect/%{name}-%{version}.tar.gz
 BuildRequires:	pkgconfig(dbus-1)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(gnutls)

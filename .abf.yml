@@ -1,2 +1,4 @@
-sources:
+removed_sources:
   openconnect-7.08.tar.gz: ac106457c6a94808096552b6dc2037ad4cce7858
+sources:
+  openconnect-8.01.tar.gz: 0a3a58c559956b7a5e5e8eec6699f8b709cc726e
