@@ -3,7 +3,7 @@
 %define devname %mklibname %{name} -d
 
 Name:		openconnect
-Version:	8.03
+Version:	8.04
 Release:	1
 Summary:	Open client for Cisco AnyConnect VPN
 
@@ -19,6 +19,7 @@ BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(libproxy-1.0)
 BuildRequires:	pkgconfig(krb5)
 BuildRequires:	pkgconfig(zlib)
+BuildRequires:	pkgconfig(liblz4)
 BuildRequires:	vpnc
 
 %description
@@ -45,6 +46,7 @@ This package contains the development files for %{name}.
 %setup -q
 
 %build
+2to3 -w trojans/tncc-wrapper.py
 %configure --disable-static --with-vpnc-script=/etc/vpnc/vpnc-script \
 	--with-openssl --without-openssl-version-check --with-default-gnutls-priority="@SYSTEM" \
 
@@ -53,10 +55,10 @@ This package contains the development files for %{name}.
 %install
 %makeinstall_std
 
+%find_lang %{name}
+
 %check
 %make check
-
-%find_lang %{name}
 
 %files -f %{name}.lang
 %doc TODO COPYING.LGPL
