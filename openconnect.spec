@@ -54,6 +54,7 @@ This package contains the development files for %{name}.
 
 %install
 %makeinstall_std
+rm -f %{buildroot}/usr/libexec/%{name}/hipreport-android.sh
 
 %find_lang %{name}
 
