@@ -14,7 +14,6 @@ Source0:	ftp://ftp.infradead.org/pub/openconnect/%{name}-%{version}.tar.gz
 BuildRequires:	pkgconfig(dbus-1)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(gnutls)
-# our version 1.0.0e of OpenSSL is known to be broken with Cisco DTLS.
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(libproxy-1.0)
 BuildRequires:	pkgconfig(krb5)
@@ -43,17 +42,17 @@ Provides:	%{name}-devel = %{version}-%{release}
 This package contains the development files for %{name}.
 
 %prep
-%setup -q
+%autosetup -p1
 
 %build
 2to3 -w trojans/tncc-wrapper.py
 %configure --disable-static --with-vpnc-script=/etc/vpnc/vpnc-script \
 	--with-openssl --without-openssl-version-check --with-default-gnutls-priority="@SYSTEM" \
 
-%make
+%make_build
 
 %install
-%makeinstall_std
+%make_install
 rm -f %{buildroot}/usr/libexec/%{name}/hipreport-android.sh
 
 %find_lang %{name}
