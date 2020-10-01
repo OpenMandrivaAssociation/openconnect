@@ -4,7 +4,7 @@
 
 Name:		openconnect
 Version:	8.10
-Release:	1
+Release:	2
 Summary:	Open client for Cisco AnyConnect VPN
 
 Group:		Networking/Other
@@ -21,6 +21,7 @@ BuildRequires:	pkgconfig(zlib)
 BuildRequires:	pkgconfig(liblz4)
 BuildRequires:	pkgconfig(libpcsclite)
 BuildRequires:	pkgconfig(libpskc)
+BuildRequires:	pkgconfig(libp11)
 BuildRequires:	vpnc
 
 %description
