@@ -45,7 +45,6 @@ This package contains the development files for %{name}.
 %autosetup -p1
 
 %build
-2to3 -w trojans/tncc-wrapper.py
 %configure --disable-static --with-vpnc-script=/etc/vpnc/vpnc-script \
 	--with-openssl --without-openssl-version-check --with-default-gnutls-priority="@SYSTEM" \
 
