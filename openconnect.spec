@@ -4,7 +4,7 @@
 
 Name:		openconnect
 Version:	8.08
-Release:	1
+Release:	2
 Summary:	Open client for Cisco AnyConnect VPN
 
 Group:		Networking/Other
