@@ -19,6 +19,8 @@ BuildRequires:	pkgconfig(libproxy-1.0)
 BuildRequires:	pkgconfig(krb5)
 BuildRequires:	pkgconfig(zlib)
 BuildRequires:	pkgconfig(liblz4)
+BuildRequires:	pkgconfig(libpcsclite)
+BuildRequires:	pkgconfig(libpskc)
 BuildRequires:	vpnc
 
 %description
@@ -45,8 +47,12 @@ This package contains the development files for %{name}.
 %autosetup -p1
 
 %build
-%configure --disable-static --with-vpnc-script=/etc/vpnc/vpnc-script \
-	--with-openssl --without-openssl-version-check --with-default-gnutls-priority="@SYSTEM" \
+%configure \
+	--disable-static \
+	--with-vpnc-script=/etc/vpnc/vpnc-script \
+	--with-openssl \
+	--without-openssl-version-check \
+	--with-default-gnutls-priority="@SYSTEM"
 
 %make_build
 
@@ -62,6 +68,7 @@ rm -f %{buildroot}/usr/libexec/%{name}/hipreport-android.sh
 %files -f %{name}.lang
 %doc TODO COPYING.LGPL
 %{_sbindir}/%{name}
+%{_datadir}/bash-completion/completions/*
 %{_mandir}/man8/*
 %{_libexecdir}/openconnect/*
 
