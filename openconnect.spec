@@ -64,7 +64,7 @@ rm -f %{buildroot}/usr/libexec/%{name}/hipreport-android.sh
 %find_lang %{name}
 
 %check
-%make check
+%make_build check
 
 %files -f %{name}.lang
 %doc TODO COPYING.LGPL
