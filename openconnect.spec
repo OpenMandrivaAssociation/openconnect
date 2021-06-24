@@ -6,11 +6,12 @@ Name:		openconnect
 Version:	8.10
 Release:	2
 Summary:	Open client for Cisco AnyConnect VPN
-
 Group:		Networking/Other
 License:	LGPLv2+
 Url:		http://www.infradead.org/openconnect.html
 Source0:	ftp://ftp.infradead.org/pub/openconnect/%{name}-%{version}.tar.gz
+Patch0:		https://src.fedoraproject.org/rpms/openconnect/raw/rawhide/f/0001-Ignore-errors-fetching-NC-landing-page-if-auth-was-s.patch
+Patch1:		https://src.fedoraproject.org/rpms/openconnect/raw/rawhide/f/0002-Unconditionally-bypass-system-crypto-policy.patch
 BuildRequires:	pkgconfig(dbus-1)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(gnutls)
@@ -41,7 +42,7 @@ Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 
-%description -n	%{devname}
+%description -n %{devname}
 This package contains the development files for %{name}.
 
 %prep
@@ -50,6 +51,7 @@ This package contains the development files for %{name}.
 %build
 %configure \
 	--disable-static \
+	--disable-dsa-tests \
 	--with-vpnc-script=/etc/vpnc/vpnc-script \
 	--with-openssl \
 	--without-openssl-version-check \
@@ -64,7 +66,7 @@ rm -f %{buildroot}/usr/libexec/%{name}/hipreport-android.sh
 %find_lang %{name}
 
 %check
-%make_build check
+%make_build check VERBOSE=1
 
 %files -f %{name}.lang
 %doc TODO COPYING.LGPL

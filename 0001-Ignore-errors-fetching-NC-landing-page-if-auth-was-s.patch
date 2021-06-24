@@ -1,0 +1,65 @@
+From 4ff991c46e6b202cabd623eeffa5ae1af1ba5c8e Mon Sep 17 00:00:00 2001
+From: David Woodhouse <dwmw2@infradead.org>
+Date: Fri, 23 Apr 2021 10:40:44 +0100
+Subject: [PATCH 1/2] Ignore errors fetching NC landing page if auth was
+ successful
+
+Signed-off-by: David Woodhouse <dwmw2@infradead.org>
+(cherry picked from commit 3e77943692b511719d9217d2ecc43588b7c6c08b)
+---
+ auth-juniper.c    | 18 +++++++++++-------
+ www/changelog.xml |  2 +-
+ 2 files changed, 12 insertions(+), 8 deletions(-)
+
+diff --git a/auth-juniper.c b/auth-juniper.c
+index 19d43978..63af3bfc 100644
+--- a/auth-juniper.c
++++ b/auth-juniper.c
+@@ -663,6 +663,17 @@ int oncp_obtain_cookie(struct openconnect_info *vpninfo)
+ 			ret = do_https_request(vpninfo, "GET", NULL, NULL,
+ 					       &form_buf, 2);
+ 
++		/* After login, the server will redirect the "browser" to a landing page.
++		 * https://kb.pulsesecure.net/articles/Pulse_Security_Advisories/SA44784
++		 * turned some of those landing pages into a 403 but we don't *care*
++		 * about that as long as we have the cookie we wanted. So check for
++		 * cookie success *before* checking 'ret'. */
++		if (!check_cookie_success(vpninfo)) {
++			free(form_buf);
++			ret = 0;
++			break;
++		}
++
+ 		if (ret < 0)
+ 			break;
+ 
+@@ -680,13 +691,6 @@ int oncp_obtain_cookie(struct openconnect_info *vpninfo)
+ 			break;
+ 		}
+ 
+-		if (!check_cookie_success(vpninfo)) {
+-			buf_free(url);
+-			free(form_buf);
+-			ret = 0;
+-			break;
+-		}
+-
+ 		doc = htmlReadMemory(form_buf, ret, url->data, NULL,
+ 				     HTML_PARSE_RECOVER|HTML_PARSE_NOERROR|HTML_PARSE_NOWARNING|HTML_PARSE_NONET);
+ 		buf_free(url);
+diff --git a/www/changelog.xml b/www/changelog.xml
+index bca5c8e2..1a05eda7 100644
+--- a/www/changelog.xml
++++ b/www/changelog.xml
+@@ -15,7 +15,7 @@
+ <ul>
+    <li><b>OpenConnect HEAD</b>
+      <ul>
+-       <li><i>No changelog entries yet</i></li>
++       <li>Ignore failures to fetch the NC landing page if the authentication was successful.</li>
+      </ul><br/>
+   </li>
+   <li><b><a href="ftp://ftp.infradead.org/pub/openconnect/openconnect-8.10.tar.gz">OpenConnect v8.10</a></b>
+-- 
+2.31.1
+

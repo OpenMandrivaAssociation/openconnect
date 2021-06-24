@@ -1,0 +1,134 @@
+From cc4658504b21eb87f9fa6bf7c1e42b83b6f64aaa Mon Sep 17 00:00:00 2001
+From: David Woodhouse <dwmw2@infradead.org>
+Date: Sat, 12 Jun 2021 08:50:09 +0100
+Subject: [PATCH 2/2] Unconditionally bypass system crypto policy
+
+This makes me extremely sad, but they rolled it out with *no* way to
+selectively allow the user to say "connect anyway", as we've always had
+for "invalid" certificates, etc.
+
+It's just unworkable and incomplete as currently implemented in the
+distributions, so we have no choice except to bypass it and wait for
+it to be fixed.
+
+Signed-off-by: David Woodhouse <dwmw2@infradead.org>
+(cherry picked from commit 7e862f2f0352409357fa7a4762481fde49909eb8
+ and commit d29822cf30293d5f8b039baf3306eed2769fa0b5)
+---
+ configure.ac           |  3 +++
+ libopenconnect.map.in  |  2 +-
+ main.c                 | 23 +++++++++++++++++++++++
+ openconnect-internal.h |  9 +++++++++
+ www/changelog.xml      |  1 +
+ 5 files changed, 37 insertions(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index 8b1b540f..3ea5e9cc 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -26,6 +26,7 @@ symver_getline=
+ symver_asprintf=
+ symver_vasprintf=
+ symver_win32_strerror=
++symver_win32_setenv=
+ 
+ case $host_os in
+  *linux* | *gnu* | *nacl*)
+@@ -54,6 +55,7 @@ case $host_os in
+     # For asprintf()
+     AC_DEFINE(_GNU_SOURCE, 1, [_GNU_SOURCE])
+     symver_win32_strerror="openconnect__win32_strerror;"
++    symver_win32_setenv="openconnect__win32_setenv;"
+     # Win32 does have the SCard API
+     system_pcsc_libs="-lwinscard"
+     system_pcsc_cflags=
+@@ -156,6 +158,7 @@ AC_SUBST(SYMVER_GETLINE, $symver_getline)
+ AC_SUBST(SYMVER_ASPRINTF, $symver_asprintf)
+ AC_SUBST(SYMVER_VASPRINTF, $symver_vasprintf)
+ AC_SUBST(SYMVER_WIN32_STRERROR, $symver_win32_strerror)
++AC_SUBST(SYMVER_WIN32_SETENV, $symver_win32_setenv)
+ 
+ AS_COMPILER_FLAGS(WFLAGS,
+         "-Wall
+diff --git a/libopenconnect.map.in b/libopenconnect.map.in
+index 5b4bc5d7..1039aacf 100644
+--- a/libopenconnect.map.in
++++ b/libopenconnect.map.in
+@@ -109,7 +109,7 @@ OPENCONNECT_5_6 {
+ } OPENCONNECT_5_5;
+ 
+ OPENCONNECT_PRIVATE {
+- global: @SYMVER_TIME@ @SYMVER_GETLINE@ @SYMVER_JAVA@ @SYMVER_ASPRINTF@ @SYMVER_VASPRINTF@ @SYMVER_WIN32_STRERROR@
++ global: @SYMVER_TIME@ @SYMVER_GETLINE@ @SYMVER_JAVA@ @SYMVER_ASPRINTF@ @SYMVER_VASPRINTF@ @SYMVER_WIN32_STRERROR@ @SYMVER_WIN32_SETENV@
+ 	openconnect_get_tls_library_version;
+ 	openconnect_fopen_utf8;
+ 	openconnect_open_utf8;
+diff --git a/main.c b/main.c
+index cc3dd91e..129755a1 100644
+--- a/main.c
++++ b/main.c
+@@ -1436,6 +1436,29 @@ int main(int argc, char **argv)
+ 			openconnect_binary_version, openconnect_version_str);
+ 	}
+ 
++	/* Some systems have a crypto policy which completely prevents DTLSv1.0
++	 * from being used, which is entirely pointless and will just drive
++	 * users back to the crappy proprietary clients. Or drive OpenConnect
++	 * to implement its own DTLS instead of using the system crypto libs.
++	 * We're happy to conform by default to the system policy which is
++	 * carefully curated to keep up to date with developments in crypto
++	 * attacks —  but we also *need* to be able to override it and connect
++	 * anyway, when the user asks us to. Just as we *can* continue even
++	 * when the server has an invalid certificate, based on user input.
++	 * It was a massive oversight that GnuTLS implemented the system
++	 * policy *without* that basic override facility, so until/unless
++	 * it actually gets implemented properly we have to just disable it.
++	 * We can't do this from openconnect_init_ssl() since that would be
++	 * calling setenv() from a library in someone else's process. And
++	 * thankfully we don't really need to since the auth-dialogs don't
++	 * care; this is mostly for the DTLS connection.
++	 */
++#ifdef OPENCONNECT_GNUTLS
++	setenv("GNUTLS_SYSTEM_PRIORITY_FILE", DEVNULL, 0);
++#else
++	setenv("OPENSSL_CONF", DEVNULL, 0);
++#endif
++
+ 	openconnect_init_ssl();
+ 
+ 	vpninfo = openconnect_vpninfo_new((char *)"Open AnyConnect VPN Agent",
+diff --git a/openconnect-internal.h b/openconnect-internal.h
+index 92edf763..9eb274c2 100644
+--- a/openconnect-internal.h
++++ b/openconnect-internal.h
+@@ -41,6 +41,15 @@
+ 
+ #include "openconnect.h"
+ 
++/* Equivalent of "/dev/null" on Windows.
++ * See https://stackoverflow.com/a/44163934
++ */
++#ifdef _WIN32
++#define DEVNULL "NUL:"
++#else
++#define DEVNULL "/dev/null"
++#endif
++
+ #if defined(OPENCONNECT_OPENSSL)
+ #include <openssl/ssl.h>
+ #include <openssl/err.h>
+diff --git a/www/changelog.xml b/www/changelog.xml
+index 1a05eda7..ca90413f 100644
+--- a/www/changelog.xml
++++ b/www/changelog.xml
+@@ -16,6 +16,7 @@
+    <li><b>OpenConnect HEAD</b>
+      <ul>
+        <li>Ignore failures to fetch the NC landing page if the authentication was successful.</li>
++       <li>Disable brittle "system policy" enforcement where it cannot be gracefully overridden at user request. <a href="https://bugzilla.redhat.com/show_bug.cgi?id=1960763"><i>(RH#1960763)</i></a>.</li>
+      </ul><br/>
+   </li>
+   <li><b><a href="ftp://ftp.infradead.org/pub/openconnect/openconnect-8.10.tar.gz">OpenConnect v8.10</a></b>
+-- 
+2.31.1
+
