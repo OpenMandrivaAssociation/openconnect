@@ -12,6 +12,7 @@ Url:		http://www.infradead.org/openconnect.html
 Source0:	ftp://ftp.infradead.org/pub/openconnect/%{name}-%{version}.tar.gz
 Patch0:		https://src.fedoraproject.org/rpms/openconnect/raw/rawhide/f/0001-Ignore-errors-fetching-NC-landing-page-if-auth-was-s.patch
 Patch1:		https://src.fedoraproject.org/rpms/openconnect/raw/rawhide/f/0002-Unconditionally-bypass-system-crypto-policy.patch
+Patch2:		0008-DTLS-Don-t-require-secure-renegotiation-from-Cisco.patch
 BuildRequires:	pkgconfig(dbus-1)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(gnutls)
