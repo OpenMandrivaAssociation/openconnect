@@ -54,7 +54,7 @@ This package contains the development files for %{name}.
 %autosetup -p1
 
 %build
-./autogen.sh
+#./autogen.sh
 %configure \
 	--disable-static \
 	--disable-dsa-tests \
