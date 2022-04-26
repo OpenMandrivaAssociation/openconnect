@@ -3,8 +3,8 @@
 %define devname %mklibname %{name} -d
 
 Name:		openconnect
-Version:	8.10
-Release:	2
+Version:	8.20
+Release:	1
 Summary:	Open client for Cisco AnyConnect VPN
 Group:		Networking/Other
 License:	LGPLv2+
