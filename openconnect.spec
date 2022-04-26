@@ -11,7 +11,7 @@ License:	LGPLv2+
 Url:		http://www.infradead.org/openconnect.html
 # use sailfish branch
 # https://git.sailfishos.org/mirror/openconnect/tree/master
-Source0:	ftp://ftp.infradead.org/pub/openconnect/%{name}-%{version}.tar.xz
+Source0:	ftp://ftp.infradead.org/pub/openconnect/%{name}-%{version}.tar.gz
 BuildRequires:	pkgconfig(dbus-1)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(gnutls)
