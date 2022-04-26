@@ -3,15 +3,15 @@
 %define devname %mklibname %{name} -d
 
 Name:		openconnect
-Version:	8.10
-Release:	2
+Version:	8.20
+Release:	1
 Summary:	Open client for Cisco AnyConnect VPN
 Group:		Networking/Other
 License:	LGPLv2+
 Url:		http://www.infradead.org/openconnect.html
 # use sailfish branch
 # https://git.sailfishos.org/mirror/openconnect/tree/master
-Source0:	ftp://ftp.infradead.org/pub/openconnect/%{name}-%{version}.tar.xz
+Source0:	ftp://ftp.infradead.org/pub/openconnect/%{name}-%{version}.tar.gz
 BuildRequires:	pkgconfig(dbus-1)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(gnutls)
@@ -54,7 +54,7 @@ This package contains the development files for %{name}.
 %autosetup -p1
 
 %build
-./autogen.sh
+#./autogen.sh
 %configure \
 	--disable-static \
 	--disable-dsa-tests \
