@@ -8,7 +8,7 @@ Release:	1
 Summary:	Open client for Cisco AnyConnect VPN
 Group:		Networking/Other
 License:	LGPLv2+
-Url:		http://www.infradead.org/openconnect.html
+Url:		https://www.infradead.org/openconnect.html
 # use sailfish branch
 # https://git.sailfishos.org/mirror/openconnect/tree/master
 Source0:	ftp://ftp.infradead.org/pub/openconnect/%{name}-%{version}.tar.gz
